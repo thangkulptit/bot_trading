@@ -1,0 +1,31 @@
+{
+  "name": "xauusd-scalping-bot",
+  "version": "1.0.0",
+  "description": "Bot scalping XAUUSD có kỷ luật: quản lý rủi ro cứng, lọc tin, AI xác nhận tín hiệu",
+  "main": "dist/index.js",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "db:migrate": "tsx src/db/migrate.ts",
+    "mt5:connect": "tsx src/scripts/mt5-connect.ts"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "mysql2": "^3.24.6",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.6",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
