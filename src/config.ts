@@ -40,7 +40,7 @@ const schema = z
     SYMBOL: str('XAUUSD'),
     MODE: z.preprocess(blankToUndefined, z.enum(['paper', 'live']).default('paper')),
     LIVE_CONFIRM: optStr(),
-    DATA_SOURCE: z.preprocess(blankToUndefined, z.enum(['metaapi', 'yahoo']).default('metaapi')),
+    DATA_SOURCE: z.preprocess(blankToUndefined, z.enum(['mt5', 'yahoo']).default('mt5')),
     YAHOO_SYMBOL: str('GC=F'),
     MAX_DATA_DELAY_SEC: num(120),
     AUTO_START: bool(false),
@@ -48,9 +48,8 @@ const schema = z
     MONITOR_INTERVAL_SEC: num(5),
     PRICE_DIGITS: num(2),
 
-    METAAPI_TOKEN: optStr(),
-    METAAPI_ACCOUNT_ID: optStr(),
-    METAAPI_REGION: str('new-york'),
+    MT5_BRIDGE_URL: str('http://127.0.0.1:8765'),
+    MT5_BRIDGE_TOKEN: optStr(),
 
     PAPER_START_BALANCE: num(10000),
     PAPER_SPREAD: num(0.25),
@@ -112,17 +111,17 @@ const schema = z
     NEWS_FAILSAFE_BLOCK: bool(true),
   })
   .superRefine((c, ctx) => {
-    const needMetaApi = c.MODE === 'live' || c.DATA_SOURCE === 'metaapi';
-    if (needMetaApi && (!c.METAAPI_TOKEN || !c.METAAPI_ACCOUNT_ID)) {
+    const needBridge = c.MODE === 'live' || c.DATA_SOURCE === 'mt5';
+    if (needBridge && !c.MT5_BRIDGE_TOKEN) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: 'Cần METAAPI_TOKEN và METAAPI_ACCOUNT_ID khi MODE=live hoặc DATA_SOURCE=metaapi',
+        message: 'Cần MT5_BRIDGE_TOKEN (trùng BRIDGE_TOKEN của bridge Python) khi MODE=live hoặc DATA_SOURCE=mt5',
       });
     }
-    if (c.MODE === 'live' && c.DATA_SOURCE !== 'metaapi') {
+    if (c.MODE === 'live' && c.DATA_SOURCE !== 'mt5') {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: 'MODE=live phải phân tích trên chart của chính broker (DATA_SOURCE=metaapi)',
+        message: 'MODE=live phải phân tích trên chart của chính tài khoản MT5 (DATA_SOURCE=mt5)',
       });
     }
     if (c.MODE === 'live' && c.LIVE_CONFIRM !== 'I_UNDERSTAND_THE_RISK') {

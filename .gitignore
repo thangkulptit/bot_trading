@@ -2,3 +2,6 @@ node_modules
 dist
 data
 .env
+bridge/.env
+bridge/.venv
+__pycache__

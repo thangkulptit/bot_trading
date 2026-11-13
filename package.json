@@ -11,7 +11,7 @@
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "db:migrate": "tsx src/db/migrate.ts",
-    "mt5:connect": "tsx src/scripts/mt5-connect.ts"
+    "mt5:check": "tsx src/scripts/mt5-check.ts"
   },
   "engines": {
     "node": ">=20"

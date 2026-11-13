@@ -1,11 +1,12 @@
 import type { Candle, Quote, Timeframe } from '../types';
 import type { MarketData } from './MarketData';
-import type { MetaApiClient } from './MetaApiClient';
+import type { Mt5BridgeClient } from './Mt5BridgeClient';
 
-export class MetaApiMarketData implements MarketData {
-  readonly name = 'metaapi';
+/** Nến và giá từ chính chart XAUUSD trên terminal MT5 (qua bridge). */
+export class Mt5MarketData implements MarketData {
+  readonly name = 'mt5';
 
-  constructor(private client: MetaApiClient) {}
+  constructor(private client: Mt5BridgeClient) {}
 
   getCandles(tf: Timeframe, limit: number): Promise<Candle[]> {
     return this.client.getCandles(tf, limit);

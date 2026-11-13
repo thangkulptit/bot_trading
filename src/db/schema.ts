@@ -5,7 +5,7 @@
 export const SCHEMA: string[] = [
   `CREATE TABLE IF NOT EXISTS orders (
     id               BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    broker           VARCHAR(32)  NOT NULL COMMENT 'paper | metaapi-live',
+    broker           VARCHAR(32)  NOT NULL COMMENT 'paper | mt5-live',
     position_id      VARCHAR(64)  NOT NULL COMMENT 'ID vị thế trên broker',
     symbol           VARCHAR(32)  NOT NULL,
     side             ENUM('BUY','SELL') NOT NULL,
